@@ -1,21 +1,24 @@
+// swift-tools-version:4.0
+
 import PackageDescription
 
 let package = Package(
-    name: "reminders",
-    targets: [
-        Target(name: "App"),
-        Target(name: "Run", dependencies: ["App"]),
+    name: "Reminders",
+    products: [
+        .library(name: "App", targets: ["App"]),
+        .executable(name: "Run", targets: ["Run"])
     ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
-        .Package(url: "https://github.com/vapor/fluent-provider.git", majorVersion: 1)
+        .package(url: "https://github.com/vapor/vapor.git", .upToNextMajor(from: "2.1.0")),
+        .package(url: "https://github.com/vapor/fluent-provider.git", .upToNextMajor(from: "1.0.0")),
     ],
-    exclude: [
-        "Config",
-        "Database",
-        "Localization",
-        "Public",
-        "Resources",
+    targets: [
+        .target(name: "App", dependencies: ["Vapor", "FluentProvider"],
+                exclude: [
+                    "Config",
+                    "Public",
+                    "Resources",
+                ]),
+        .target(name: "Run", dependencies: ["App"])
     ]
 )
-
