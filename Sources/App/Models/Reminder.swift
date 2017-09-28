@@ -5,25 +5,25 @@ final class Reminder: Model {
     
     let title: String
     let description: String
-    let user: Identifier?
+    let userId: Identifier?
     
-    init(title: String, description: String, userId: Identifier) {
+    init(title: String, description: String, user: User) {
         self.title = title
         self.description = description
-        self.user = userId
+        self.userId = user.id
     }
     
     init(row: Row) throws {
         title = try row.get("title")
         description = try row.get("description")
-        user = try row.get(User.foreignIdKey)
+        userId = try row.get(User.foreignIdKey)
     }
     
     func makeRow() throws -> Row {
         var row = Row()
         try row.set("title", title)
         try row.set("description", description)
-        try row.set(User.foreignIdKey, user)
+        try row.set(User.foreignIdKey, userId)
         return row
     }
 }
@@ -45,7 +45,11 @@ extension Reminder: Preparation {
 
 extension Reminder: JSONConvertible {
     convenience init(json: JSON) throws {
-        try self.init(title: json.get("title"), description: json.get("description"), userId: try json.get("user_id"))
+        let userId: Identifier = try json.get("user_id")
+        guard let user = try User.find(userId) else {
+            throw Abort.badRequest
+        }
+        try self.init(title: json.get("title"), description: json.get("description"), user: user)
     }
     
     func makeJSON() throws -> JSON {
@@ -53,9 +57,15 @@ extension Reminder: JSONConvertible {
         try json.set("id", id)
         try json.set("title", title)
         try json.set("description", description)
-        try json.set("user_id", user)
+        try json.set("user_id", userId)
         return json
     }
 }
 
 extension Reminder: ResponseRepresentable {}
+
+extension Reminder {
+    var user: Parent<Reminder, User> {
+        return parent(id: userId)
+    }
+}

@@ -7,6 +7,7 @@ struct RemindersController {
         reminderGroup.get(handler: allReminders)
         reminderGroup.post("create", handler: createReminder)
         reminderGroup.get(Reminder.parameter, handler: getReminder)
+        reminderGroup.get(Reminder.parameter, "user", handler: getReminderUser)
     }
     
     func createReminder(_ req: Request) throws -> ResponseRepresentable {
@@ -26,5 +27,13 @@ struct RemindersController {
     func getReminder(_ req: Request) throws -> ResponseRepresentable {
         let reminder = try req.parameters.next(Reminder.self)
         return reminder
+    }
+    
+    func getReminderUser(_ req: Request) throws -> ResponseRepresentable {
+        let reminder = try req.parameters.next(Reminder.self)
+        guard let user = try reminder.user.get() else {
+            throw Abort.notFound
+        }
+        return user
     }
 }
