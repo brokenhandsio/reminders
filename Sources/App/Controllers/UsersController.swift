@@ -7,6 +7,7 @@ struct UsersController {
         userGroup.get(handler: allUsers)
         userGroup.post("create", handler: createUser)
         userGroup.get(User.parameter, handler: getUser)
+        userGroup.get(User.parameter, "reminders", handler: getUsersReminders)
     }
     
     func createUser(_ req: Request) throws -> ResponseRepresentable {
@@ -26,5 +27,10 @@ struct UsersController {
     func getUser(_ req: Request) throws -> ResponseRepresentable {
         let user = try req.parameters.next(User.self)
         return user
+    }
+    
+    func getUsersReminders(_ req: Request) throws -> ResponseRepresentable {
+        let user = try req.parameters.next(User.self)
+        return try user.reminders.all().makeJSON()
     }
 }

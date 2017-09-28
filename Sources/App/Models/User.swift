@@ -47,3 +47,9 @@ extension User: JSONConvertible {
 }
 
 extension User: ResponseRepresentable {}
+
+extension User {
+    var reminders: Children<User, Reminder> {
+        return children()
+    }
+}
