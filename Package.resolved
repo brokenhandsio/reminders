@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/vapor/json.git",
         "state": {
           "branch": null,
-          "revision": "5c2a62771cefdb04b1f96f4ccc52b581fe20cfb1",
-          "version": "2.2.0"
+          "revision": "735800d8f2e75ebe3be25559eb6a781f4666dcfc",
+          "version": "2.2.1"
         }
       },
       {
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/vapor/routing.git",
         "state": {
           "branch": null,
-          "revision": "66750975f5e5abaacf4bfa4d37ec85dd20c89312",
-          "version": "2.1.0"
+          "revision": "cb9d78aca2540c1a6b45b0ab43e5b0c50f29d216",
+          "version": "2.2.0"
         }
       },
       {
