@@ -21,5 +21,6 @@ extension Config {
         preparations.append(User.self)
         preparations.append(Reminder.self)
         preparations.append(Category.self)
+        preparations.append(Pivot<Reminder, Category>.self)
     }
 }

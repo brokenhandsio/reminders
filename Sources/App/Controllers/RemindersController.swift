@@ -8,6 +8,7 @@ struct RemindersController {
         reminderGroup.post("create", handler: createReminder)
         reminderGroup.get(Reminder.parameter, handler: getReminder)
         reminderGroup.get(Reminder.parameter, "user", handler: getReminderUser)
+        reminderGroup.get(Reminder.parameter, "categories", handler: getRemindersCategories)
     }
     
     func createReminder(_ req: Request) throws -> ResponseRepresentable {
@@ -16,6 +17,15 @@ struct RemindersController {
         }
         let reminder = try Reminder(json: json)
         try reminder.save()
+        
+        if let categories = json["categories"]?.array {
+            for categoryJSON in categories {
+                if let category = try Category.find(categoryJSON["id"]) {
+                    try reminder.categories.add(category)
+                }
+            }
+        }
+        
         return reminder
     }
     
@@ -35,5 +45,10 @@ struct RemindersController {
             throw Abort.notFound
         }
         return user
+    }
+    
+    func getRemindersCategories(_ req: Request) throws -> ResponseRepresentable {
+        let reminder = try req.parameters.next(Reminder.self)
+        return try reminder.categories.all().makeJSON()
     }
 }

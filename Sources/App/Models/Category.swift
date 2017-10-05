@@ -50,3 +50,9 @@ extension Category: JSONConvertible {
 }
 
 extension Category: ResponseRepresentable {}
+
+extension Category {
+    var reminders: Siblings<Category, Reminder, Pivot<Category, Reminder>> {
+        return siblings()
+    }
+}

@@ -7,6 +7,7 @@ struct CategoriesController {
         categoryGroup.get(handler: allCategories)
         categoryGroup.post("create", handler: createCategory)
         categoryGroup.get(Category.parameter, handler: getCategory)
+        categoryGroup.get(Category.parameter, "reminders", handler: getCategorysReminders)
     }
     
     func createCategory(_ req: Request) throws -> ResponseRepresentable {
@@ -26,5 +27,10 @@ struct CategoriesController {
     func getCategory(_ req: Request) throws -> ResponseRepresentable {
         let category = try req.parameters.next(Category.self)
         return category
+    }
+    
+    func getCategorysReminders(_ req: Request) throws -> ResponseRepresentable {
+        let category = try req.parameters.next(Category.self)
+        return try category.reminders.all().makeJSON()
     }
 }
