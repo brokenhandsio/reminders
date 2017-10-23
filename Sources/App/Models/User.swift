@@ -1,21 +1,26 @@
 import FluentProvider
 
 final class User: Model {
+
     let storage = Storage()
-    
     let name: String
-    
+
+    struct Properties {
+        static let id = "id"
+        static let name = "name"
+    }
+
     init(name: String) {
         self.name = name
     }
     
     init(row: Row) throws {
-        name = try row.get("name")
+        name = try row.get(Properties.name)
     }
     
     func makeRow() throws -> Row {
         var row = Row()
-        try row.set("name", name)
+        try row.set(Properties.name, name)
         return row
     }
 }
@@ -24,7 +29,7 @@ extension User: Preparation {
     static func prepare(_ database: Database) throws {
         try database.create(self) { builder in
             builder.id()
-            builder.string("name")
+            builder.string(Properties.name)
         }
     }
     
@@ -35,13 +40,13 @@ extension User: Preparation {
 
 extension User: JSONConvertible {
     convenience init(json: JSON) throws {
-        try self.init(name: json.get("name"))
+        try self.init(name: json.get(Properties.name))
     }
     
     func makeJSON() throws -> JSON {
         var json = JSON()
-        try json.set("id", id)
-        try json.set("name", name)
+        try json.set(Properties.id, id)
+        try json.set(Properties.name, name)
         return json
     }
 }

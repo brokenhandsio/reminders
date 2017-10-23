@@ -17,15 +17,16 @@ struct RemindersController {
         }
         let reminder = try Reminder(json: json)
         try reminder.save()
-        
+
         if let categories = json["categories"]?.array {
             for categoryJSON in categories {
-                if let category = try Category.find(categoryJSON["id"]) {
-                    try reminder.categories.add(category)
+                guard let categoryName = categoryJSON.string else {
+                    throw Abort.badRequest
                 }
+                try Category.addCategory(categoryName, to: reminder)
             }
         }
-        
+
         return reminder
     }
     
