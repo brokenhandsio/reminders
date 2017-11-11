@@ -13,7 +13,11 @@ class WebController {
     }
 
     func indexHandler(_ req: Request) throws -> ResponseRepresentable {
-        return try viewRenderer.make("index")
+        var parameters: [String: NodeRepresentable] = [:]
+        parameters["page_title"] = "Home"
+        parameters["reminders"] = try Reminder.all()
+
+        return try viewRenderer.make("index", parameters)
     }
 
 }

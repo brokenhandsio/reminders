@@ -4,11 +4,16 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Reminders | Home</title>
+  <title>#(page_title) | Reminders</title>
 </head>
 
 <body>
     <h1>Reminders</h1>
-    <p>So we don't forget</p>
+    <table>
+        <thead><td>Title</td><td>Description</td></thead>
+        #loop(reminders, "reminder") {
+            <tr><td>#(reminder.title)</td><td>#(reminder.description)</td></tr>
+        }
+    </table>
 </body>
 </html>
