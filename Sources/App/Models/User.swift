@@ -58,3 +58,12 @@ extension User {
         return children()
     }
 }
+
+extension User: NodeRepresentable {
+    func makeNode(in context: Context?) throws -> Node {
+        var node = Node([:], in: context)
+        try node.set(Properties.id, id)
+        try node.set(Properties.name, name)
+        return node
+    }
+}

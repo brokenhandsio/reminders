@@ -75,3 +75,12 @@ extension Category {
         try category.reminders.add(reminder)
     }
 }
+
+extension Category: NodeRepresentable {
+    func makeNode(in context: Context?) throws -> Node {
+        var node = Node([:], in: context)
+        try node.set(Properties.id, id)
+        try node.set(Properties.name, name)
+        return node
+    }
+}

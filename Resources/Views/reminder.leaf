@@ -1,0 +1,16 @@
+#extend("base")
+
+#export("body") {
+    <h1>#(reminder.title)</h1>
+    <h2>Created by #(user.name)</h2>
+    <p>#(reminder.description)</p>
+
+    #if(categories) {
+        <h3>Categories</h3>
+        <ul>
+        #loop(categories, "category") {
+            <li>#(category.name)</li>
+        }
+        </ul>
+    }
+}

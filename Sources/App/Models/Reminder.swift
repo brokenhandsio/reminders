@@ -86,6 +86,7 @@ extension Reminder {
 extension Reminder: NodeRepresentable {
     func makeNode(in context: Context?) throws -> Node {
         var node = Node([:], in: context)
+        try node.set(Properties.id, id)
         try node.set(Properties.title, title)
         try node.set(Properties.description, description)
         return node
