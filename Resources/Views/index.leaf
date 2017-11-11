@@ -1,13 +1,6 @@
-<!doctype html>
+#extend("base")
 
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-
-  <title>#(page_title) | Reminders</title>
-</head>
-
-<body>
+#export("body") {
     <h1>Reminders</h1>
     <table>
         <thead><td>Title</td><td>Description</td></thead>
@@ -15,5 +8,4 @@
             <tr><td>#(reminder.title)</td><td>#(reminder.description)</td></tr>
         }
     </table>
-</body>
-</html>
+}
