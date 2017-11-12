@@ -2,14 +2,14 @@
 
 #export("body") {
     <h1>#(reminder.title)</h1>
-    <h2>Created by #(user.name)</h2>
+    <h2>Created by <a href="/users/#(user.id)">#(user.name)</a></h2>
     <p>#(reminder.description)</p>
 
     #if(categories) {
         <h3>Categories</h3>
         <ul>
         #loop(categories, "category") {
-            <li>#(category.name)</li>
+            <li><a href="/categories/#(category.id)">#(category.name)</a></li>
         }
         </ul>
     }

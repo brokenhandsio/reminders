@@ -1,0 +1,15 @@
+#extend("base")
+
+#export("body") {
+    <h1>#(category.name)</h1>
+
+    #if(reminders) {
+        <h2>Reminders under #(category.name)</h2>
+        <table>
+            <thead><td>Title</td><td>Description</td></thead>
+            #loop(reminders, "reminder") {
+                <tr><td><a href="/reminders/#(reminder.id)">#(reminder.title)</a></td><td>#(reminder.description)</td></tr>
+            }
+        </table>
+    }
+}

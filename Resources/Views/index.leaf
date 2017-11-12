@@ -5,7 +5,25 @@
     <table>
         <thead><td>Title</td><td>Description</td></thead>
         #loop(reminders, "reminder") {
-            <tr><td>#(reminder.title)</td><td>#(reminder.description)</td></tr>
+            <tr><td><a href="/reminders/#(reminder.id)">#(reminder.title)</a></td><td>#(reminder.description)</td></tr>
         }
     </table>
+
+    <h1>Users</h1>
+    <table>
+        <thead><td>Name</td></thead>
+        #loop(users, "user") {
+            <tr><td><a href="/users/#(user.id)">#(user.name)</a></td></tr>
+        }
+    </table>
+    <p><a href="/users/">All Users</a></p>
+
+    <h1>Categories</h1>
+    <table>
+        <thead><td>Name</td></thead>
+        #loop(categories, "category") {
+            <tr><td><a href="/categories/#(category.id)">#(category.name)</a></td></tr>
+        }
+    </table>
+    <p><a href="/categories/">All Categories</a></p>
 }

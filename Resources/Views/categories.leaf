@@ -1,0 +1,10 @@
+#extend("base")
+
+#export("body") {
+    <h1>Categories</h1>
+    <ul>
+        #loop(categories, "category") {
+            <li><a href="/categories/#(category.id)">#(category.name)</a></li>
+        }
+    </ul>
+}
